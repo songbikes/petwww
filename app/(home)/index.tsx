@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
+import { Link } from 'expo-router'
 import { StyleSheet, Text, View } from 'react-native'
-import { SSOButton } from '../components/SSOButton'
 
 export default function Page() {
   const { user } = useUser()
@@ -11,13 +11,9 @@ export default function Page() {
         <Text style={styles.greeting}>Hello {user?.emailAddresses[0].emailAddress}</Text>
       </SignedIn>
       <SignedOut>
-        <View style={styles.authContainer}>
-          <Text style={styles.title}>Welcome to Pet</Text>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
-          <SSOButton provider="oauth_google" />
-          <SSOButton provider="oauth_apple" />
-          <SSOButton provider="oauth_facebook" />
-        </View>
+        <Link href="/(auth)/sign-in">
+          <Text>Sign in</Text>
+        </Link>
       </SignedOut>
     </View>
   )
