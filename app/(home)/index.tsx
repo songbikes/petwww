@@ -1,8 +1,8 @@
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 import { StyleSheet, Text, View } from 'react-native'
-import { SSOButton } from './components/SSOButton'
+import { SSOButton } from '../components/SSOButton'
 
-export default function Index() {
+export default function Page() {
   const { user } = useUser()
 
   return (
