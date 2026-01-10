@@ -34,7 +34,7 @@ export const Colors = {
   dark: {
     text: white,
     background: black,
-    tint: tintColorLight,
+    tint: tintColorDark,
     tabIconDefault: grey200,
     tabIconSelected: primary,
     primary: primary,
