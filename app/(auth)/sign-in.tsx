@@ -1,4 +1,5 @@
 import { SSOButton } from '@/components/SSOButton'
+import { Spacing } from '@/constants/Styles'
 import { StyleSheet, View } from 'react-native'
 
 export default function AuthScreen() {
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: Spacing.md,
+    gap: Spacing.lg,
   },
 })
