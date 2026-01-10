@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: Spacing.md,
+    justifyContent: 'space-around',
     borderRadius: BorderRadius.round,
     position: 'relative',
     height: 50,

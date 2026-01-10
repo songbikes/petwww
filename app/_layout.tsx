@@ -15,7 +15,16 @@ export default function RootLayout() {
     >
       <ConvexProvider client={convex}>
         <Stack>
-          <Stack.Screen name="index" />
+          <Stack.Screen name="(home)" options={{ headerShown: false }} />
+          <Stack.Screen 
+            name="(auth)/sign-in" 
+            options={{ 
+              presentation: 'formSheet',
+              title: 'Sign In',
+              sheetGrabberVisible: true,
+              sheetAllowedDetents: [0.7, 1.0],
+            }} 
+          />
         </Stack>
       </ConvexProvider>
     </ClerkProvider>
