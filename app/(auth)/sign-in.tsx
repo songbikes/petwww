@@ -1,5 +1,5 @@
+import { SSOButton } from '@/components/SSOButton'
 import { StyleSheet, View } from 'react-native'
-import { SSOButton } from '../components/SSOButton'
 
 export default function AuthScreen() {
   return (
