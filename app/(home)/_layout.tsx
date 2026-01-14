@@ -3,10 +3,12 @@ import { Colors } from '@/constants/Colors'
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 import { Link, Tabs } from 'expo-router'
 import { CalendarSearch, Flame, Globe, MapPin } from 'lucide-react-native'
+import { useTranslation } from 'react-i18next'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 export default function Layout() {
   const { user } = useUser()
+  const { t } = useTranslation()
 
   return (
     <Tabs
@@ -71,21 +73,21 @@ export default function Layout() {
       <Tabs.Screen
         name="arena"
         options={{
-          title: 'Arena',
+          title: t('arena'),
           tabBarIcon: ({ color }) => <Flame color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="events"
         options={{
-          title: 'Events',
+          title: t('events'),
           tabBarIcon: ({ color }) => <CalendarSearch color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Profile',
+          title: t('profile'),
           tabBarIcon: ({ color }) => (
             <View style={{ width: 24, height: 24 }}>
               <LogoIcon width="100%" height="100%" color={color} />
@@ -96,14 +98,14 @@ export default function Layout() {
       <Tabs.Screen
         name="social"
         options={{
-          title: 'Social',
+          title: t('social'),
           tabBarIcon: ({ color }) => <Globe color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="maps"
         options={{
-          title: 'Maps',
+          title: t('maps'),
           tabBarIcon: ({ color }) => <MapPin color={color} size={24} />,
         }}
       />

@@ -1,3 +1,4 @@
+import '@/i18n'; // Initialize i18n
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
 import { ConvexProvider, ConvexReactClient } from "convex/react";

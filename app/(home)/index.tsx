@@ -1,9 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { LanguagePickerComponent } from '@/components/LanguagePicker';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Profile() {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
+      <Text style={styles.title}>{t('welcome')}</Text>
+      <View style={{ height: 20 }} />
+      <LanguagePickerComponent />
     </View>
   )
 }
@@ -14,4 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  }
 })
