@@ -4,7 +4,7 @@ import { api } from '@/convex/_generated/api'
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
 import { useConvexAuth, useMutation } from 'convex/react'
 import { Link, Tabs, useRouter } from 'expo-router'
-import { CalendarSearch, Flame, Globe, MapPin } from 'lucide-react-native'
+import { CalendarSearch, CircleUserRound, Earth, MapPin, Settings, UsersRound } from 'lucide-react-native'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native'
@@ -139,10 +139,7 @@ export default function Layout() {
             </SignedOut>
             <SignedIn>
               <TouchableOpacity onPress={handleProfilePress}>
-                <Image 
-                  source={{ uri: user?.imageUrl }} 
-                  style={{ width: 36, height: 36, borderRadius: 18 }} 
-                />
+                <Settings color={Colors.light.text} size={28} />
               </TouchableOpacity>
             </SignedIn>
           </View>
@@ -164,8 +161,8 @@ export default function Layout() {
       <Tabs.Screen
         name="arena"
         options={{
-          title: t('arena'),
-          tabBarIcon: ({ color }) => <Flame color={color} size={24} />,
+          title: t('tour'),
+          tabBarIcon: ({ color }) => <Earth color={color} size={24} />,
         }}
       />
       <Tabs.Screen
@@ -176,21 +173,10 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="index"
-        options={{
-          title: t('profile'),
-          tabBarIcon: ({ color }) => (
-            <View style={{ width: 24, height: 24 }}>
-              <LogoIcon width="100%" height="100%" color={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="social"
         options={{
           title: t('social'),
-          tabBarIcon: ({ color }) => <Globe color={color} size={24} />,
+          tabBarIcon: ({ color }) => <UsersRound color={color} size={24} />,
         }}
       />
       <Tabs.Screen
@@ -198,6 +184,20 @@ export default function Layout() {
         options={{
           title: t('maps'),
           tabBarIcon: ({ color }) => <MapPin color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: t('profile'),
+          tabBarIcon: ({ color }) => user?.imageUrl ? (
+            <Image 
+              source={{ uri: user.imageUrl }} 
+              style={{ width: 24, height: 24, borderRadius: 12 }} 
+            />
+          ) : (
+            <CircleUserRound color={color} size={24} />
+          ),
         }}
       />
     </Tabs>
