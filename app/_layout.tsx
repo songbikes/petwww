@@ -1,7 +1,8 @@
 import '@/i18n'; // Initialize i18n
-import { ClerkProvider } from '@clerk/clerk-expo';
+import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ConvexReactClient } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Stack } from "expo-router";
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
@@ -14,7 +15,7 @@ export default function RootLayout() {
       tokenCache={tokenCache}
       publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
     >
-      <ConvexProvider client={convex}>
+      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <Stack>
           <Stack.Screen name="(home)" options={{ headerShown: false }} />
           <Stack.Screen 
@@ -27,7 +28,7 @@ export default function RootLayout() {
             }} 
           />
         </Stack>
-      </ConvexProvider>
+      </ConvexProviderWithClerk>
     </ClerkProvider>
   );
 }

@@ -120,3 +120,21 @@ export const store = mutation({
     });
   },
 });
+
+export const deleteCurrentUser = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Called deleteCurrentUser without authentication present");
+    }
+
+    const user = await userByExternalId(ctx, identity.subject);
+    
+    // If user exists in Convex, delete them.
+    // If not, simply return (idempotent delete).
+    if (user !== null) {
+      await ctx.db.delete(user._id);
+    }
+  },
+});

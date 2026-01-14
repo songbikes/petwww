@@ -1,14 +1,107 @@
 import LogoIcon from '@/assets/images/logoIcon.svg'
 import { Colors } from '@/constants/Colors'
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
-import { Link, Tabs } from 'expo-router'
+import { api } from '@/convex/_generated/api'
+import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
+import { useConvexAuth, useMutation } from 'convex/react'
+import { Link, Tabs, useRouter } from 'expo-router'
 import { CalendarSearch, Flame, Globe, MapPin } from 'lucide-react-native'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { ActionSheetIOS, Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native'
 
 export default function Layout() {
   const { user } = useUser()
+  const { isAuthenticated } = useConvexAuth()
   const { t } = useTranslation()
+  const storeUser = useMutation(api.users.store)
+  const deleteConvexUser = useMutation(api.users.deleteCurrentUser)
+  const { signOut } = useClerk()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user && isAuthenticated) {
+      storeUser({}).catch(err => {
+        console.log("Store user failed:", err);
+      });
+    }
+  }, [user, isAuthenticated])
+
+  const handleProfilePress = () => {
+    const options = [t('profile'), 'Sign Out', 'Delete Account', 'Cancel'];
+    const destructiveButtonIndex = 2; // Delete Account
+    const cancelButtonIndex = 3;
+
+    const handleDeleteAccount = async () => {
+      try {
+        if (!user) return;
+        
+        // 1. Delete from Convex
+        await deleteConvexUser({});
+        
+        // 2. Delete from Clerk
+        await user.delete();
+        
+        // 3. Sign Out (Implicitly handled by user deletion usually, but helps cleanup)
+        // await signOut(); // often not needed if user.delete() clears session, but safe to do
+        
+        router.replace('/(auth)/sign-in');
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        Alert.alert("Error", "Failed to delete account. Please try again.");
+      }
+    };
+
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options,
+          destructiveButtonIndex,
+          cancelButtonIndex,
+        },
+        async (buttonIndex) => {
+          if (buttonIndex === 0) {
+            router.push('/(home)');
+          } else if (buttonIndex === 1) {
+            await signOut();
+            router.replace('/(auth)/sign-in');
+          } else if (buttonIndex === 2) {
+             // Confirm deletion on iOS
+             Alert.alert(
+                "Delete Account",
+                "Are you sure? This action cannot be undone.",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Delete", style: "destructive", onPress: handleDeleteAccount }
+                ]
+             );
+          }
+        }
+      );
+    } else {
+      Alert.alert(
+        'Account',
+        'Choose an action',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign Out', onPress: async () => {
+             await signOut();
+             router.replace('/(auth)/sign-in');
+          }},
+          { text: 'Delete Account', style: 'destructive', onPress: () => {
+             Alert.alert(
+                "Delete Account",
+                "Are you sure? This action cannot be undone.",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Delete", style: "destructive", onPress: handleDeleteAccount }
+                ]
+             );
+          }},
+          { text: t('profile'), onPress: () => router.push('/(home)') },
+        ]
+      );
+    }
+  };
 
   return (
     <Tabs
@@ -45,14 +138,12 @@ export default function Layout() {
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link href="/(home)" asChild>
-                <TouchableOpacity>
-                  <Image 
-                    source={{ uri: user?.imageUrl }} 
-                    style={{ width: 36, height: 36, borderRadius: 18 }} 
-                  />
-                </TouchableOpacity>
-              </Link>
+              <TouchableOpacity onPress={handleProfilePress}>
+                <Image 
+                  source={{ uri: user?.imageUrl }} 
+                  style={{ width: 36, height: 36, borderRadius: 18 }} 
+                />
+              </TouchableOpacity>
             </SignedIn>
           </View>
         ),
