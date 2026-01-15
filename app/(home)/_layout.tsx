@@ -4,7 +4,7 @@ import { api } from '@/convex/_generated/api'
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/clerk-expo'
 import { useConvexAuth, useMutation } from 'convex/react'
 import { Link, Tabs, useRouter } from 'expo-router'
-import { CalendarSearch, CircleUserRound, Earth, MapPin, Settings, UsersRound } from 'lucide-react-native'
+import { CalendarSearch, CircleUserRound, Earth, MapPin, Plus, Settings, UsersRound } from 'lucide-react-native'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native'
@@ -114,7 +114,7 @@ export default function Layout() {
 
   return (
     <Tabs
-      screenOptions={{
+      screenOptions={({ route }) => ({
         tabBarActiveTintColor: Colors.light.primary,
         tabBarInactiveTintColor: Colors.light.tabIconDefault,
         headerShown: true,
@@ -132,27 +132,41 @@ export default function Layout() {
             <LogoIcon width={32} height={32} />
           </View>
         ),
-        headerRight: () => (
-          <View style={{ marginRight: 16 }}>
-            <SignedOut>
-              <Link href="/(auth)/sign-in" asChild>
-                <TouchableOpacity style={{ 
-                  backgroundColor: Colors.light.primary, 
-                  paddingHorizontal: 14, 
-                  paddingVertical: 8, 
-                  borderRadius: 20 
-                }}>
-                  <Text style={{ color: '#fff', fontWeight: '600', fontSize: 14 }}>Sign In</Text>
+        headerRight: () => {
+          const showCreateButton = ['events', 'social', 'maps'].includes(route.name);
+          const handleCreatePress = () => {
+            if (route.name === 'events') router.push('/(modals)/create-event');
+            if (route.name === 'social') router.push('/(modals)/create-post');
+            if (route.name === 'maps') router.push('/(modals)/create-location');
+          };
+          
+          return (
+            <View style={{ marginRight: 16, flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+              <SignedIn>
+                {showCreateButton && (
+                  <TouchableOpacity onPress={handleCreatePress}>
+                    <Plus color={Colors.light.text} size={28} />
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity onPress={handleProfilePress}>
+                  <Settings color={Colors.light.text} size={28} />
                 </TouchableOpacity>
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <TouchableOpacity onPress={handleProfilePress}>
-                <Settings color={Colors.light.text} size={28} />
-              </TouchableOpacity>
-            </SignedIn>
-          </View>
-        ),
+              </SignedIn>
+              <SignedOut>
+                <Link href="/(auth)/sign-in" asChild>
+                  <TouchableOpacity style={{ 
+                    backgroundColor: Colors.light.primary, 
+                    paddingHorizontal: 14, 
+                    paddingVertical: 8, 
+                    borderRadius: 20 
+                  }}>
+                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: 14 }}>Sign In</Text>
+                  </TouchableOpacity>
+                </Link>
+              </SignedOut>
+            </View>
+          );
+        },
         tabBarStyle: {
           backgroundColor: Colors.light.background,
           borderTopWidth: 1,
@@ -165,7 +179,7 @@ export default function Layout() {
           fontSize: 12,
           fontWeight: '500',
         },
-      }}
+      })}
     >
       <Tabs.Screen
         name="arena"

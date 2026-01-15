@@ -62,3 +62,15 @@ Join our community of developers creating universal apps.
   - Updated imports in `sign-in.tsx` and `_layout.tsx`.
 - **Configuration**:
   - Updated `tsconfig.json` with `"baseUrl": "."` for better path resolution.
+
+### 2026-01-16 Morning
+- **Auth & UX**:
+  - Implemented Sign Out redirect to `/social` with success Toast notification.
+  - Added `react-native-toast-message` with custom global styles (rounded black/red).
+- **Navigation**:
+  - Added "Plus" (+) button to headers of Events, Social, and Maps tabs.
+  - Configured conditional navigation to `/(modals)/create-event`, `create-post`, and `create-location`.
+- **UI Polish**:
+  - Standardized Modal presentation to native iOS `formSheet` style.
+  - Applied custom detents (heights) for modals and sign-in screen.
+  - Refactored `modalScreenOptions` in `app/_layout.tsx` to DRY up configuration.

@@ -53,6 +53,13 @@ const toastConfig = {
   )
 };
 
+// Reusable configuration for FormSheet modals
+const modalScreenOptions = {
+  presentation: 'formSheet' as const,
+  sheetGrabberVisible: true,
+  sheetAllowedDetents: [0.9, 1.0],
+};
+
 export default function RootLayout() {
   return (
     <ClerkProvider 
@@ -64,15 +71,24 @@ export default function RootLayout() {
           <Stack.Screen name="(home)" options={{ headerShown: false }} />
           <Stack.Screen 
             name="(modals)/create-event" 
-            options={{ presentation: 'modal', title: 'New Event' }} 
+            options={{ 
+              ...modalScreenOptions,
+              title: 'New Event',
+            }} 
           />
           <Stack.Screen 
             name="(modals)/create-post" 
-            options={{ presentation: 'modal', title: 'New Post' }} 
+            options={{ 
+              ...modalScreenOptions,
+              title: 'New Post',
+            }} 
           />
           <Stack.Screen 
             name="(modals)/create-location" 
-            options={{ presentation: 'modal', title: 'Add Location' }} 
+            options={{ 
+              ...modalScreenOptions,
+              title: 'Add Location',
+            }} 
           />
           <Stack.Screen 
             name="settings/index" 
@@ -81,10 +97,9 @@ export default function RootLayout() {
           <Stack.Screen 
             name="(auth)/sign-in" 
             options={{ 
-              presentation: 'formSheet',
+              ...modalScreenOptions,
               title: 'Sign In',
-              sheetGrabberVisible: true,
-              sheetAllowedDetents: [0.7, 1.0],
+              sheetAllowedDetents: [0.7, 1.0], // Custom override for Sign In
             }} 
           />
         </Stack>
