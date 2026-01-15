@@ -1,6 +1,7 @@
 import { useClerk } from '@clerk/clerk-expo'
 import { useRouter } from 'expo-router'
 import { Text, TouchableOpacity } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 export const SignOutButton = () => {
   // Use `useClerk()` to access the `signOut()` function
@@ -11,7 +12,11 @@ export const SignOutButton = () => {
     try {
       await signOut()
       // Redirect to your desired page
-      router.replace('/')
+      router.replace('/(home)/social')
+      Toast.show({
+        type: 'success',
+        text1: 'Signed out successfully',
+      })
     } catch (err) {
       // See https://clerk.com/docs/guides/development/custom-flows/error-handling
       // for more info on error handling

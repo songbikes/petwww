@@ -8,6 +8,7 @@ import { CalendarSearch, CircleUserRound, Earth, MapPin, Settings, UsersRound } 
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActionSheetIOS, Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 export default function Layout() {
   const { user } = useUser()
@@ -63,7 +64,11 @@ export default function Layout() {
             router.push('/(home)');
           } else if (buttonIndex === 1) {
             await signOut();
-            router.replace('/(auth)/sign-in');
+            router.replace('/(home)/social');
+            Toast.show({
+              type: 'success',
+              text1: 'Signed out successfully',
+            });
           } else if (buttonIndex === 2) {
              // Confirm deletion on iOS
              Alert.alert(
@@ -85,7 +90,11 @@ export default function Layout() {
           { text: 'Cancel', style: 'cancel' },
           { text: 'Sign Out', onPress: async () => {
              await signOut();
-             router.replace('/(auth)/sign-in');
+             router.replace('/(home)/social');
+             Toast.show({
+              type: 'success',
+              text1: 'Signed out successfully',
+            });
           }},
           { text: 'Delete Account', style: 'destructive', onPress: () => {
              Alert.alert(

@@ -1,13 +1,57 @@
+import { Colors } from '@/constants/Colors';
 import '@/i18n'; // Initialize i18n
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Stack } from "expo-router";
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
   unsavedChangesWarning: false,
 });
+
+const toastConfig = {
+  success: (props: any) => (
+    <BaseToast
+      {...props}
+      style={{
+        borderLeftWidth: 0,
+        borderRadius: 25,
+        backgroundColor: Colors.light.black,
+        height: 50,
+        width: '90%',
+        marginTop: 10,
+      }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '600',
+        color: Colors.light.white,
+        textAlign: 'center'
+      }}
+    />
+  ),
+  error: (props: any) => (
+    <ErrorToast
+      {...props}
+      style={{
+        borderLeftWidth: 0,
+        borderRadius: 25,
+        backgroundColor: Colors.light.red,
+        height: 50,
+        width: '90%',
+        marginTop: 10,
+      }}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '600',
+        color: Colors.light.white,
+        textAlign: 'center'
+      }}
+    />
+  )
+};
 
 export default function RootLayout() {
   return (
@@ -44,6 +88,7 @@ export default function RootLayout() {
             }} 
           />
         </Stack>
+        <Toast config={toastConfig} topOffset={140} />
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );

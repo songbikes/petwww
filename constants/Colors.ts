@@ -30,6 +30,8 @@ export const Colors = {
     yellow: yellow,
     border: grey400,
     backgroundSubtle: grey200,
+    black: black,
+    white: white,
   },
   dark: {
     text: white,
@@ -46,5 +48,7 @@ export const Colors = {
     yellow: yellow,
     border: grey100,
     backgroundSubtle: grey300,
+    black: black,
+    white: white,
   },
 };
