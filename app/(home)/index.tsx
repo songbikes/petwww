@@ -1,4 +1,4 @@
-import { LanguagePickerComponent } from '@/components/LanguagePicker';
+import { LanguagePickerComponent } from '@/components/features/settings/LanguagePicker';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 

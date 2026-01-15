@@ -1,5 +1,5 @@
 import Logo from '@/assets/images/logoIcon.svg'
-import { SSOButton } from '@/components/SSOButton'
+import { SSOButton } from '@/components/features/auth/SSOButton'
 import { Colors } from '@/constants/Colors'
 import { FontSize, Spacing } from '@/constants/Styles'
 import { StyleSheet, Text, View } from 'react-native'

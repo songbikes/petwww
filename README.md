@@ -48,3 +48,17 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Updates
+
+### 2026-01-15
+- **Architecture Refactor**: Moved to a feature-based folder structure inside `components/features/` (auth, settings, events, social, maps).
+- **Navigation**:
+  - Added Global Modal Stack in `app/_layout.tsx` for creating content.
+  - Added `app/(modals)/create-event.tsx`, `create-post.tsx`, `create-location.tsx`.
+  - Added `app/settings/index.tsx` for app settings.
+- **Components**:
+  - Relocated `SSOButton`, `SignOutButton`, and `LanguagePicker` to their feature folders.
+  - Updated imports in `sign-in.tsx` and `_layout.tsx`.
+- **Configuration**:
+  - Updated `tsconfig.json` with `"baseUrl": "."` for better path resolution.

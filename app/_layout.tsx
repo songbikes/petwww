@@ -19,6 +19,22 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(home)" options={{ headerShown: false }} />
           <Stack.Screen 
+            name="(modals)/create-event" 
+            options={{ presentation: 'modal', title: 'New Event' }} 
+          />
+          <Stack.Screen 
+            name="(modals)/create-post" 
+            options={{ presentation: 'modal', title: 'New Post' }} 
+          />
+          <Stack.Screen 
+            name="(modals)/create-location" 
+            options={{ presentation: 'modal', title: 'Add Location' }} 
+          />
+          <Stack.Screen 
+            name="settings/index" 
+            options={{ title: 'Settings', headerBackTitle: 'Back' }} 
+          />
+          <Stack.Screen 
             name="(auth)/sign-in" 
             options={{ 
               presentation: 'formSheet',
