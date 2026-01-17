@@ -1,24 +1,10 @@
 import { Colors } from '@/constants/Colors';
+import { SUPPORTED_LANGUAGES } from '@/constants/Languages';
 import { FontSize, Spacing } from '@/constants/Styles';
 import { Check, X } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-const LANGUAGES = [
-  { code: 'en-US', label: 'English (US)' },
-  { code: 'en-GB', label: 'English (UK)' },
-  { code: 'zh-Hans', label: '简体中文' },
-  { code: 'zh-Hant', label: '繁體中文' },
-  { code: 'es', label: 'Español' },
-  { code: 'de', label: 'Deutsch' },
-  { code: 'fr', label: 'Français' },
-  { code: 'pt', label: 'Português' },
-  { code: 'tr', label: 'Türkçe' },
-  { code: 'th', label: 'ไทย' },
-  { code: 'ko', label: '한국어' },
-  { code: 'ja', label: '日本語' },
-];
 
 export function LanguagePickerComponent() {
   const { i18n, t } = useTranslation();
@@ -29,7 +15,7 @@ export function LanguagePickerComponent() {
     setModalVisible(false);
   };
 
-  const currentLabel = LANGUAGES.find(l => l.code === i18n.language)?.label || i18n.language;
+  const currentLabel = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language)?.label || i18n.language;
 
   return (
     <View>
@@ -57,7 +43,7 @@ export function LanguagePickerComponent() {
             </View>
             
             <FlatList
-              data={LANGUAGES}
+              data={SUPPORTED_LANGUAGES}
               keyExtractor={(item) => item.code}
               renderItem={({ item }) => (
                 <TouchableOpacity 

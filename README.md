@@ -84,3 +84,8 @@ Join our community of developers creating universal apps.
   - Rebuilt `/settings/index.tsx` as a dedicated list-view screen.
   - Added a new `select-language` modal (formSheet style).
   - Moved **Sign Out** and **Delete Account** from ActionSheet to the Settings screen.
+- **Backend Sync & UX**:
+  - Updated **Convex Schema** to store user language preferences in the `users` table.
+  - Implemented automatic **Language Detection** based on user region at sign-up.
+  - Fixed **Modal UI** issues on iOS by adjusting container flex behaviors in `formSheet` modals.
+  - Unified language data source under `SUPPORTED_LANGUAGES` in `constants/Languages.ts`.

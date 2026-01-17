@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/Colors';
-import { LANGUAGES } from '@/constants/Languages';
+import { SUPPORTED_LANGUAGES } from '@/constants/Languages';
 import { FontSize, Spacing } from '@/constants/Styles';
 import { api } from '@/convex/_generated/api';
 import { useClerk, useUser } from '@clerk/clerk-expo';
@@ -18,7 +18,7 @@ export default function SettingsScreen() {
   
   const deleteConvexUser = useMutation(api.users.deleteCurrentUser);
 
-  const currentLanguageLabel = LANGUAGES.find(l => l.code === i18n.language)?.label || i18n.language;
+  const currentLanguageLabel = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language)?.label || i18n.language;
 
   const handleSignOut = async () => {
     try {

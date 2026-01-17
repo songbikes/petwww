@@ -96,8 +96,8 @@ async function userByExternalId(ctx: QueryCtx, externalId: string) {
 }
 
 export const store = mutation({
-  args: {},
-  handler: async (ctx) => {
+  args: { language: v.optional(v.string()) },
+  handler: async (ctx, { language }) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
@@ -106,7 +106,10 @@ export const store = mutation({
     // identity.subject is Clerk user ID; reuse userByExternalId
     const user = await userByExternalId(ctx, identity.subject);
     if (user !== null) {
-      // Optionally patch if name changed
+      // If language is provided and user doesn't have one, update it
+      if (language && !user.language) {
+         await ctx.db.patch(user._id, { language });
+      }
       return user._id;
     }
 
@@ -116,7 +119,8 @@ export const store = mutation({
         externalId: identity.subject,
         email: (identity.emailAddresses as Array<{ emailAddress: string; }>)?.[0]?.emailAddress ?? "",
         tier: "General",
-        hasCompletedOnboarding: false
+        hasCompletedOnboarding: false,
+        language: language // Save the initial language
     });
   },
 });

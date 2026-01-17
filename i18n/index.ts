@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import i18n, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { getLanguageFromRegion } from '@/constants/Languages';
 
 import de from './locales/de';
 import enGB from './locales/en-GB';
@@ -30,7 +31,11 @@ const languageDetector: LanguageDetectorAsyncModule = {
         return language;
       } else {
         const locales = Localization.getLocales();
-        const detectedLang = locales[0]?.languageTag || 'en-US';
+        // Use region-based detection as per requirement
+        // "If the user location matches one of the country in the language selector..."
+        const regionCode = locales[0]?.regionCode;
+        const detectedLang = getLanguageFromRegion(regionCode);
+        
         callback(detectedLang);
         return detectedLang;
       }

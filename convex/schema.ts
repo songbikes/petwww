@@ -17,6 +17,9 @@ export default defineSchema({
     
     // Onboarding status
     hasCompletedOnboarding: v.boolean(),
+
+    // User's preferred language (e.g., 'en-US', 'tr', 'ja')
+    language: v.optional(v.string()),
     
     // Additional user information collected during onboarding
     // Add fields as needed, e.g.:

@@ -105,9 +105,9 @@ export default function RootLayout() {
           <Stack.Screen 
             name="(modals)/select-language" 
             options={{ 
-              ...modalScreenOptions,
+              presentation: 'formSheet' as const,
+              sheetGrabberVisible: true,
               title: 'Select Language',
-              sheetAllowedDetents: [0.5, 0.9],
             }} 
           />
         </Stack>

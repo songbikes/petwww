@@ -12,7 +12,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 export default function Layout() {
   const { user } = useUser()
   const { isAuthenticated } = useConvexAuth()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const storeUser = useMutation(api.users.store)
   const deleteConvexUser = useMutation(api.users.deleteCurrentUser)
   const { signOut } = useClerk()
@@ -20,11 +20,11 @@ export default function Layout() {
 
   useEffect(() => {
     if (user && isAuthenticated) {
-      storeUser({}).catch(err => {
+      storeUser({ language: i18n.language }).catch(err => {
         console.log("Store user failed:", err);
       });
     }
-  }, [user, isAuthenticated])
+  }, [user, isAuthenticated, i18n.language])
 
   const handleProfilePress = () => {
     router.push('/settings');
