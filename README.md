@@ -74,3 +74,13 @@ Join our community of developers creating universal apps.
   - Standardized Modal presentation to native iOS `formSheet` style.
   - Applied custom detents (heights) for modals and sign-in screen.
   - Refactored `modalScreenOptions` in `app/_layout.tsx` to DRY up configuration.
+
+### 2026-01-17
+- **Internationalization (i18n)**:
+  - Refactored translations into split files per locale (e.g., `i18n/locales/en-US.ts`).
+  - Added Namespaces support (e.g., `t('common.welcome')`, `t('tabs.events')`).
+  - Added support for Turkish (tr).
+- **Settings Screen Upgrade**:
+  - Rebuilt `/settings/index.tsx` as a dedicated list-view screen.
+  - Added a new `select-language` modal (formSheet style).
+  - Moved **Sign Out** and **Delete Account** from ActionSheet to the Settings screen.

@@ -6,7 +6,7 @@ export default function Profile() {
   const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('welcome')}</Text>
+      <Text style={styles.title}>{t('common.welcome')}</Text>
       <View style={{ height: 20 }} />
       <LanguagePickerComponent />
     </View>

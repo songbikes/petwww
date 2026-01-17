@@ -7,8 +7,7 @@ import { Link, Tabs, useRouter } from 'expo-router'
 import { CalendarSearch, CircleUserRound, Earth, MapPin, Plus, Settings, UsersRound } from 'lucide-react-native'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActionSheetIOS, Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native'
-import Toast from 'react-native-toast-message'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 export default function Layout() {
   const { user } = useUser()
@@ -28,88 +27,7 @@ export default function Layout() {
   }, [user, isAuthenticated])
 
   const handleProfilePress = () => {
-    const options = [t('profile'), 'Sign Out', 'Delete Account', 'Cancel'];
-    const destructiveButtonIndex = 2; // Delete Account
-    const cancelButtonIndex = 3;
-
-    const handleDeleteAccount = async () => {
-      try {
-        if (!user) return;
-        
-        // 1. Delete from Convex
-        await deleteConvexUser({});
-        
-        // 2. Delete from Clerk
-        await user.delete();
-        
-        // 3. Sign Out (Implicitly handled by user deletion usually, but helps cleanup)
-        // await signOut(); // often not needed if user.delete() clears session, but safe to do
-        
-        router.replace('/(auth)/sign-in');
-      } catch (error) {
-        console.error("Error deleting account:", error);
-        Alert.alert("Error", "Failed to delete account. Please try again.");
-      }
-    };
-
-    if (Platform.OS === 'ios') {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options,
-          destructiveButtonIndex,
-          cancelButtonIndex,
-        },
-        async (buttonIndex) => {
-          if (buttonIndex === 0) {
-            router.push('/(home)');
-          } else if (buttonIndex === 1) {
-            await signOut();
-            router.replace('/(home)/social');
-            Toast.show({
-              type: 'success',
-              text1: 'Signed out successfully',
-            });
-          } else if (buttonIndex === 2) {
-             // Confirm deletion on iOS
-             Alert.alert(
-                "Delete Account",
-                "Are you sure? This action cannot be undone.",
-                [
-                    { text: "Cancel", style: "cancel" },
-                    { text: "Delete", style: "destructive", onPress: handleDeleteAccount }
-                ]
-             );
-          }
-        }
-      );
-    } else {
-      Alert.alert(
-        'Account',
-        'Choose an action',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Sign Out', onPress: async () => {
-             await signOut();
-             router.replace('/(home)/social');
-             Toast.show({
-              type: 'success',
-              text1: 'Signed out successfully',
-            });
-          }},
-          { text: 'Delete Account', style: 'destructive', onPress: () => {
-             Alert.alert(
-                "Delete Account",
-                "Are you sure? This action cannot be undone.",
-                [
-                    { text: "Cancel", style: "cancel" },
-                    { text: "Delete", style: "destructive", onPress: handleDeleteAccount }
-                ]
-             );
-          }},
-          { text: t('profile'), onPress: () => router.push('/(home)') },
-        ]
-      );
-    }
+    router.push('/settings');
   };
 
   return (
@@ -184,35 +102,35 @@ export default function Layout() {
       <Tabs.Screen
         name="arena"
         options={{
-          title: t('tour'),
+          title: t('tabs.tour'),
           tabBarIcon: ({ color }) => <Earth color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="events"
         options={{
-          title: t('events'),
+          title: t('tabs.events'),
           tabBarIcon: ({ color }) => <CalendarSearch color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="social"
         options={{
-          title: t('social'),
+          title: t('tabs.social'),
           tabBarIcon: ({ color }) => <UsersRound color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="maps"
         options={{
-          title: t('maps'),
+          title: t('tabs.maps'),
           tabBarIcon: ({ color }) => <MapPin color={color} size={24} />,
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
-          title: t('profile'),
+          title: t('tabs.profile'),
           tabBarIcon: ({ color }) => user?.imageUrl ? (
             <Image 
               source={{ uri: user.imageUrl }} 

@@ -14,6 +14,7 @@ const LANGUAGES = [
   { code: 'de', label: 'Deutsch' },
   { code: 'fr', label: 'Français' },
   { code: 'pt', label: 'Português' },
+  { code: 'tr', label: 'Türkçe' },
   { code: 'th', label: 'ไทย' },
   { code: 'ko', label: '한국어' },
   { code: 'ja', label: '日本語' },
@@ -36,7 +37,7 @@ export function LanguagePickerComponent() {
         style={styles.button} 
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.buttonText}>{t('change_language')}</Text>
+        <Text style={styles.buttonText}>{t('common.change_language')}</Text>
         <Text style={styles.currentLanguage}>{currentLabel}</Text>
       </TouchableOpacity>
 
@@ -49,7 +50,7 @@ export function LanguagePickerComponent() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.header}>
-              <Text style={styles.headerTitle}>{t('change_language')}</Text>
+              <Text style={styles.headerTitle}>{t('common.change_language')}</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
                 <X color={Colors.light.text} size={24} />
               </TouchableOpacity>

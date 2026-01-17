@@ -2,13 +2,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import i18n, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { translations } from './translations';
+
+import de from './locales/de';
+import enGB from './locales/en-GB';
+import enUS from './locales/en-US';
+import es from './locales/es';
+import fr from './locales/fr';
+import ja from './locales/ja';
+import ko from './locales/ko';
+import pt from './locales/pt';
+import th from './locales/th';
+import tr from './locales/tr';
+import zhHans from './locales/zh-Hans';
+import zhHant from './locales/zh-Hant';
 
 const STORE_LANGUAGE_KEY = 'settings.lang';
 
 const languageDetector: LanguageDetectorAsyncModule = {
   type: 'languageDetector',
-  async: true, // flags below detection to be async
+  async: true,
   init: () => {},
   detect: async function (callback: (lng: string | readonly string[] | undefined) => void | undefined) {
     try {
@@ -37,13 +49,20 @@ const languageDetector: LanguageDetectorAsyncModule = {
   },
 };
 
-// Transform translations to i18next format
-const resources = Object.keys(translations).reduce((acc, lang) => {
-  acc[lang] = { 
-    translation: translations[lang as keyof typeof translations] 
-  };
-  return acc;
-}, {} as any);
+const resources = {
+  'en-US': { translation: enUS },
+  'en-GB': { translation: enGB },
+  'zh-Hans': { translation: zhHans },
+  'zh-Hant': { translation: zhHant },
+  'es': { translation: es },
+  'de': { translation: de },
+  'fr': { translation: fr },
+  'pt': { translation: pt },
+  'th': { translation: th },
+  'tr': { translation: tr },
+  'ko': { translation: ko },
+  'ja': { translation: ja },
+};
 
 i18n
   .use(initReactI18next)
@@ -55,7 +74,7 @@ i18n
       escapeValue: false,
     },
     react: {
-        useSuspense: false // avoiding suspense for simple loading
+        useSuspense: false 
     }
   });
 

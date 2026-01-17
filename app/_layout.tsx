@@ -102,6 +102,14 @@ export default function RootLayout() {
               sheetAllowedDetents: [0.7, 1.0], // Custom override for Sign In
             }} 
           />
+          <Stack.Screen 
+            name="(modals)/select-language" 
+            options={{ 
+              ...modalScreenOptions,
+              title: 'Select Language',
+              sheetAllowedDetents: [0.5, 0.9],
+            }} 
+          />
         </Stack>
         <Toast config={toastConfig} topOffset={140} />
       </ConvexProviderWithClerk>
