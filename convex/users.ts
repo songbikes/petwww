@@ -1,7 +1,12 @@
 // convex/users.ts
 import { UserJSON } from "@clerk/backend";
 import { v, Validator } from "convex/values";
-import { internalMutation, mutation, query, QueryCtx } from "./_generated/server";
+import {
+  internalMutation,
+  mutation,
+  query,
+  QueryCtx,
+} from "./_generated/server";
 
 export const current = query({
   args: {},
@@ -53,7 +58,7 @@ export const completeOnboarding = mutation({
     tier: v.union(
       v.literal("General"),
       v.literal("Medical"),
-      v.literal("Business")
+      v.literal("Business"),
     ),
   },
   async handler(ctx, { tier }) {
@@ -61,7 +66,7 @@ export const completeOnboarding = mutation({
     if (!user) {
       throw new Error("User not found");
     }
-    
+
     await ctx.db.patch(user._id, {
       tier,
       hasCompletedOnboarding: true,
@@ -76,7 +81,7 @@ export const updateAvatar = mutation({
     if (!user) {
       throw new Error("User not found");
     }
-    
+
     await ctx.db.patch(user._id, { avatarUrl });
   },
 });
@@ -108,19 +113,21 @@ export const store = mutation({
     if (user !== null) {
       // If language is provided and user doesn't have one, update it
       if (language && !user.language) {
-         await ctx.db.patch(user._id, { language });
+        await ctx.db.patch(user._id, { language });
       }
       return user._id;
     }
 
     // Fallback: create if webhook hasn't run yet
     return await ctx.db.insert("users", {
-        name: identity.name ?? "Anonymous",
-        externalId: identity.subject,
-        email: (identity.emailAddresses as Array<{ emailAddress: string; }>)?.[0]?.emailAddress ?? "",
-        tier: "General",
-        hasCompletedOnboarding: false,
-        language: language // Save the initial language
+      name: identity.name ?? "Anonymous",
+      externalId: identity.subject,
+      email:
+        (identity.emailAddresses as Array<{ emailAddress: string }>)?.[0]
+          ?.emailAddress ?? "",
+      tier: "General",
+      hasCompletedOnboarding: false,
+      language: language, // Save the initial language
     });
   },
 });
@@ -130,11 +137,13 @@ export const deleteCurrentUser = mutation({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      throw new Error("Called deleteCurrentUser without authentication present");
+      throw new Error(
+        "Called deleteCurrentUser without authentication present",
+      );
     }
 
     const user = await userByExternalId(ctx, identity.subject);
-    
+
     // If user exists in Convex, delete them.
     // If not, simply return (idempotent delete).
     if (user !== null) {

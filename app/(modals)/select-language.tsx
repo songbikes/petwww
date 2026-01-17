@@ -1,10 +1,10 @@
-import { Colors } from '@/constants/Colors';
-import { SUPPORTED_LANGUAGES } from '@/constants/Languages';
-import { FontSize, Spacing } from '@/constants/Styles';
-import { useRouter } from 'expo-router';
-import { Check } from 'lucide-react-native';
-import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Colors } from "@/constants/Colors";
+import { SUPPORTED_LANGUAGES } from "@/constants/Languages";
+import { FontSize, Spacing } from "@/constants/Styles";
+import { useRouter } from "expo-router";
+import { Check } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function SelectLanguage() {
   const { i18n } = useTranslation();
@@ -18,18 +18,20 @@ export default function SelectLanguage() {
   return (
     <View style={styles.container}>
       {SUPPORTED_LANGUAGES.map((item) => (
-        <TouchableOpacity 
+        <TouchableOpacity
           key={item.code}
           style={[
             styles.option,
-            i18n.language === item.code && styles.selectedOption
-          ]} 
+            i18n.language === item.code && styles.selectedOption,
+          ]}
           onPress={() => changeLanguage(item.code)}
         >
-          <Text style={[
-            styles.text,
-            i18n.language === item.code && styles.selectedText
-          ]}>
+          <Text
+            style={[
+              styles.text,
+              i18n.language === item.code && styles.selectedText,
+            ]}
+          >
             {item.label}
           </Text>
           {i18n.language === item.code && (
@@ -47,9 +49,9 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
   },
   option: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: Spacing.md,
     paddingHorizontal: Spacing.lg,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
   },
   selectedText: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.light.primary,
   },
 });

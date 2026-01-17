@@ -52,6 +52,7 @@ Join our community of developers creating universal apps.
 ## Updates
 
 ### 2026-01-15
+
 - **Architecture Refactor**: Moved to a feature-based folder structure inside `components/features/` (auth, settings, events, social, maps).
 - **Navigation**:
   - Added Global Modal Stack in `app/_layout.tsx` for creating content.
@@ -64,6 +65,7 @@ Join our community of developers creating universal apps.
   - Updated `tsconfig.json` with `"baseUrl": "."` for better path resolution.
 
 ### 2026-01-16 Morning
+
 - **Auth & UX**:
   - Implemented Sign Out redirect to `/social` with success Toast notification.
   - Added `react-native-toast-message` with custom global styles (rounded black/red).
@@ -76,6 +78,7 @@ Join our community of developers creating universal apps.
   - Refactored `modalScreenOptions` in `app/_layout.tsx` to DRY up configuration.
 
 ### 2026-01-17
+
 - **Internationalization (i18n)**:
   - Refactored translations into split files per locale (e.g., `i18n/locales/en-US.ts`).
   - Added Namespaces support (e.g., `t('common.welcome')`, `t('tabs.events')`).
